@@ -19,18 +19,18 @@ namespace ClipBoard
             InitializeComponent();
         }
         
-        public MyStack Data = new MyStack();
-        public MyStack DataTemp = new MyStack();
-        public MyStack DataTemp1 = new MyStack();
-        public string temp;
-        public object temp1;
-        public object temp2;
+        public MyStack Data = new MyStack();// Sử dụng lưu dữ liệu vào trong stack để quản lí 
+        public MyStack DataTemp = new MyStack();// Sử dụng lưu dữ liệu để cho việc hiển thị dự liệu theo thứ tự dựa trên nguyên tắc LIFO ở HistoryofDataBox
+        public MyStack DataTemp1 = new MyStack();// Sử dụng lưu dữ liệu của DataTemp mỗi khi DataTemp có sự thay đổi, đưa dữ liệu vào lại Datatemp để dữ liệu trong DataTemp vẫn tuân theo LIFO
+        public string temp;// Sử dụng lưu dữ liệu của BoxCopyData hiện có để Push vào stack Data và DataTemp
+        public object temp1;// Sử dụng lưu dữ liệu lấy ra khỏi Stack DataTemp, sau đó đưa vào HistoryofDataBox để hiển thị, Push vào Datatemp1 để không làm mất dữ liệu 
+        public object temp2;//  Sử dụng lưu dữ liệu lấy ra khỏi Stack DataTemp1, Push vào Datatemp để không làm mất dữ liệu 
 
-        public void CopyButton_Click(object sender, EventArgs e)
+        public void CopyButton_Click(object sender, EventArgs e)// Button Copy --> Copy dữ liệu từ BoxCopyData để rồi hiển thị ở HistoryofDataBox
         { 
-                if (BoxCopyData.Text != "")
+                if (BoxCopyData.Text != "")// kiểm tra xem BoxCopyData có văn bản hay không 
                 {
-                    HistoryOfDataBox.Clear();
+                    HistoryOfDataBox.Clear(); // Xóa hết dữ liệu hiển thị để sắp xếp dữ liệu thứ tự in mỗi khi có một dữ liệu mới cần copy từ boxcopydata
                     if (Data.IsEmpty())
                     {
                         temp = BoxCopyData.Text;
@@ -80,7 +80,7 @@ namespace ClipBoard
                 if (DisplayBox.SelectedText != "") DisplayBox.SelectedText = string.Empty;
                 DisplayBox.Text += Convert.ToString(Data.Pop().data) + Environment.NewLine; 
             }
-            else MessageBox.Show("The Empty of ClipBoard's Data");
+            else MessageBox.Show("The Empty of ClipBoard's Data","CẢNH BÁO",MessageBoxButtons.OK,MessageBoxIcon.Error);
         }
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -168,7 +168,7 @@ namespace ClipBoard
         }
         private void ExitButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Bạn có chắc muốn thoát không?", "Warming !!!", MessageBoxButtons.YesNo) == DialogResult.Yes)
+           if (MessageBox.Show("Bạn có chắc muốn thoát không?", "CẢNH BÁO !!!", MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
                 Application.Exit();
         }
 
